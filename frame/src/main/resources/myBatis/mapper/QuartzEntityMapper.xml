@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.frame.mapper.QuartzEntityMapper">
+
+    <resultMap type="com.example.frame.entity.QuartzEntity" id="BaseResultMap">
+        <id property="id" column="id"/>
+        <result property="jobName" column="job_name"/>
+        <result property="jobGroup" column="job_group"/>
+        <result property="methodName" column="method_name"/>
+        <result property="methodParams" column="method_params"/>
+        <result property="cronExpression" column="cron_expression"/>
+        <result property="misfirePolicy" column="misfire_policy"/>
+        <result property="concurrent" column="concurrent"/>
+        <result property="status" column="status"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="selectJobVo">
+        select id, job_name, job_group, method_name, method_params, cron_expression, misfire_policy, concurrent, status, create_time, remark
+		from quartz_entity
+    </sql>
+
+    <select id="selectAll" parameterType="com.example.frame.entity.QuartzEntity" resultMap="BaseResultMap">
+        <include refid="selectJobVo"/>
+        <where>
+            1=1
+            <if test="vo.jobName != null and vo.jobName != ''">
+                AND job_name like concat('%', #{vo.jobName}, '%')
+            </if>
+            <if test="vo.methodName != null and vo.methodName != ''">
+                AND method_name like concat('%', #{vo.methodName}, '%')
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteJobById" parameterType="String">
+ 		delete from quartz_entity where id = #{jobId}
+ 	</delete>
+
+    <delete id="deleteJobByIds" parameterType="Long">
+        delete from quartz_entity where job_id in
+        <foreach collection="array" item="jobId" open="(" separator="," close=")">
+            #{jobId}
+        </foreach>
+    </delete>
+
+    <update id="updateJob" parameterType="com.example.frame.entity.QuartzEntity">
+        update quartz_entity
+        <set>
+            <if test="jobName != null and jobName != ''">job_name = #{jobName},</if>
+            <if test="jobGroup != null and jobGroup != ''">job_group = #{jobGroup},</if>
+            <if test="methodName != null and methodName != ''">method_name = #{methodName},</if>
+            <if test="methodParams != null">method_params = #{methodParams},</if>
+            <if test="cronExpression != null and cronExpression != ''">cron_expression =
+                #{cronExpression},
+            </if>
+            <if test="misfirePolicy != null and misfirePolicy != ''">misfire_policy =
+                #{misfirePolicy},
+            </if>
+            <if test="concurrent != null and concurrent != ''">concurrent = #{concurrent},</if>
+            <if test="status !=null">status = #{status},</if>
+            <if test="remark != null and remark != ''">remark = #{remark},</if>
+            <if test="updateTime != null and updateTime != ''">update_time = #{updateTime}</if>
+        </set>
+        where id = #{id}
+    </update>
+    <insert id="insertJob" parameterType="com.example.frame.entity.QuartzEntity" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into quartz_entity(
+        <if test="id != null and id !=''">id,</if>
+        <if test="jobGroup != null and jobGroup != ''">job_group,</if>
+        <if test="methodName != null and methodName != ''">method_name,</if>
+        <if test="methodParams != null and methodParams != ''">method_params,</if>
+        <if test="cronExpression != null and cronExpression != ''">cron_expression,</if>
+        <if test="misfirePolicy != null and misfirePolicy != ''">misfire_policy,</if>
+        <if test="concurrent != null and concurrent != ''">concurrent,</if>
+        <if test="status != null and status != ''">status,</if>
+        <if test="remark != null and remark != ''">remark,</if>
+        <if test="jobName != null and jobName != ''">job_name</if>
+        )values(
+        <if test="id != null and id  != ''">#{id},</if>
+        <if test="jobGroup != null and jobGroup != ''">#{jobGroup},</if>
+        <if test="methodName != null and methodName != ''">#{methodName},</if>
+        <if test="methodParams != null and methodParams != ''">#{methodParams},</if>
+        <if test="cronExpression != null and cronExpression != ''">#{cronExpression},</if>
+        <if test="misfirePolicy != null and misfirePolicy != ''">#{misfirePolicy},</if>
+        <if test="concurrent != null and concurrent != ''">#{concurrent},</if>
+        <if test="status != null and status != ''">#{status},</if>
+        <if test="remark != null and remark != ''">#{remark},</if>
+        <if test="jobName != null and jobName != ''">#{jobName}</if>
+        )
+    </insert>
+
+</mapper>

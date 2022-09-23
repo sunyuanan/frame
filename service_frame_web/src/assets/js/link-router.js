@@ -1,0 +1,4 @@
+
+
+
+alert(window.location.pathname); 

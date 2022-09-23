@@ -1,0 +1,53 @@
+spring:
+  profiles:
+    #active: prod
+    active: dev
+  application:
+    name: frameProject
+  #    ip拦截访问
+  interceptIp: true
+  #    城市拦截访问
+  interceptCity: true
+
+
+
+server:
+  port: 888
+# 整合 mybatis
+logging:
+  level:
+    com.example.frame: debug
+  file: log/${spring.application.name}.log
+#  config: classpath:logback-spring.xml
+mybatis-plus:
+  configuration:
+    call-setters-on-nulls: true
+  mapper-locations: classpath:myBatis/mapper/*.xml
+  # 配置别名、自定义TypeHandler处理器包位置
+  global-config:
+    db-config:
+      logic-delete-value: 0
+      logic-not-delete-value: 1
+
+# Sa-Token配置
+sa-token:
+  # token名称 (同时也是cookie名称)
+  token-name: authorization
+  # token有效期，单位s 默认30天, -1代表永不过期
+  timeout: -1
+  # token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
+  activity-timeout: -1
+  # 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)
+  is-concurrent: false
+  # 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token)
+  is-share: false
+  # token风格
+  token-style: uuid
+  # 是否输出操作日志
+  is-log: false
+  # jwt秘钥
+  jwt-secret-key: duaofuidoajfoaisudfio
+  #获取 Token-Session 时是否必须登录 (如果配置为true，会在每次获取 Token-Session 时校验是否登录)
+  tokenSessionCheckLogin: false
+
+
