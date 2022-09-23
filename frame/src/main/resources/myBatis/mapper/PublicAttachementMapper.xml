@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.frame.mapper.PublicAttachementMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.frame.entity.PublicAttachement">
+        <id column="id" property="id"/>
+        <result column="fjmc" property="fjmc"/>
+        <result column="fjlj" property="fjlj"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="sync_time" property="syncTime"/>
+        <result column="glid" property="glid"/>
+        <result column="fjlx" property="fjlx"/>
+        <result column="fjhzm" property="fjhzm"/>
+        <result column="ysmc" property="ysmc"/>
+        <result column="fjdl" property="fjdl"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, fjmc, fjlj, create_time, update_time, sync_time, glid, fjlx, fjhzm, ysmc, fjdl
+    </sql>
+
+
+    <select id="listByPage" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        FROM
+        public_attachement
+        WHERE 1=1
+        <if test="publicAttachement.search!=null and publicAttachement.search!=''">
+            and (
+            fjhzm like concat('%',#{publicAttachement.search},'%') or
+            ysmc like concat('%',#{publicAttachement.search},'%') or
+            fjdl like concat('%',#{publicAttachement.search},'%') or
+            fjlx like concat('%',#{publicAttachement.search},'%')
+            )
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.frame.mapper.SysUserLoginMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.frame.entity.SysUserLogin">
+        <id column="ID" property="id" />
+        <result column="CREATE_TIME" property="createTime" />
+        <result column="UPDATE_TIME" property="updateTime" />
+        <result column="SYNC_TIME" property="syncTime" />
+        <result column="STATUS" property="status" />
+        <result column="ACCOUNT" property="account" />
+        <result column="SALT" property="salt" />
+        <result column="PASSWORD" property="password" />
+        <result column="ENCRYPTION_PASSWORD" property="encryptionPassword" />
+        <result column="LAST_LOGIN_TIME" property="lastLoginTime" />
+        <result column="USER_ID" property="userId" />
+        <result column="SD_ID" property="sdId" />
+        <result column="TYPE" property="type" />
+        <result column="abnormal_num" property="abnormalNum"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ID, CREATE_TIME, UPDATE_TIME, SYNC_TIME, STATUS, ACCOUNT, SALT, PASSWORD, ENCRYPTION_PASSWORD, LAST_LOGIN_TIME, USER_ID, SD_ID, TYPE,abnormal_num
+    </sql>
+
+</mapper>
